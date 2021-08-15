@@ -9,7 +9,7 @@ public class Test {
 
 
         int a=sc.nextInt();
-
+        System.out.println("fjsdhgfk");
 
         System.out.println(a);
 
