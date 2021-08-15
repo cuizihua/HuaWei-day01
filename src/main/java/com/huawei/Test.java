@@ -11,7 +11,7 @@ public class Test {
         int a=sc.nextInt();
         System.out.println("fjsdhgfk");
         System.out.println("sedfsdf");
-
+        System.out.println("sdfdsf");
         System.out.println(a);
 
 
