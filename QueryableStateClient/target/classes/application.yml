@@ -1,0 +1,7 @@
+server:
+  port: 8088
+
+
+#自定义配置文件key
+flink:
+  jobID: 79fc663dd72103a0efb2b02df56b3c55
