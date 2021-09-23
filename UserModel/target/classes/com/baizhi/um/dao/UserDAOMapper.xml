@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.um.dao.UserDAO">
+
+    <!--<cache type="org.apache.ibatis.cache.impl.PerpetualCache"></cache>-->
+
+    <!--mybatis在创建这个类对应的对象的时候，会把namespace传递给构造方法参数-->
+    <cache type="com.baizhi.um.cache.MyRedisCache"></cache>
+    <delete id="deleteByUserIds">
+        delete from t_user where id in
+        (<foreach collection="idssss" item="id" separator="," close=")">#{id}</foreach>
+    </delete>
+
+    <select id="queryUserByPage" resultType="User">
+        select * from t_user
+        <where>
+            <if test="value!=null and !''.equals(value)">
+                and ${column} like concat('%',#{value},'%')
+            </if>
+        </where>
+        limit #{offset},#{limit}
+    </select>
+
+    <delete id="deleteByUserId">
+        delete from t_user where id = #{id}
+    </delete>
+</mapper>

@@ -1,0 +1,34 @@
+server:
+  port: 8099
+
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    url: jdbc:mysql://localhost:3306/bigdata?useUnicode=true&characterEncoding=utf8
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+
+
+mybatis:
+  mapper-locations: classpath:/com/baizhi/um/dao/*DAOMapper.xml
+#  mapper-locations: classpath:/com.baizhi.um.dao/UserDAOMapper.xml
+
+
+  #给实体类起别名，它所起的别名就是类名（不区分大小写的）
+  #把给定包下的所有类，都起一个别名
+  type-aliases-package: com.baizhi.um.entity
+  executor-type: batch #mybatis的批量操作
+
+logging:
+  level:
+#    root: debug #所有的日志信息都以debug级别显示
+    root: info
+    com.baizhi.um.dao.UserDAO: debug #指定com.baizhi.um.dao.UserDAO类下的日志级别是debug
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
