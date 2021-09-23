@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!--控制台日志， 控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度,%msg：日志消息，%n是换行符-->
+            <!--<pattern>%-5level %d{yyyy-MM-dd HH:mm:ss} %msg%n</pattern>-->
+            <pattern>%p %d{yyyy-MM-dd HH:mm:ss} %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 日志输出级别 -->
+    <root level="info">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+
+    <!--配置，生成的日志写入到flume-->
+    <appender name="flume" class="com.baizhi.wa.flume.FlumeLogstashV1Appender">
+        <flumeAgents>
+            192.168.10.101:44444,
+        </flumeAgents>
+        <flumeProperties>
+            connect-timeout=4000;
+            request-timeout=8000
+        </flumeProperties>
+        <batchSize>1</batchSize>
+        <reportingWindow>1000</reportingWindow>
+        <reporterMaxThreadPoolSize>150</reporterMaxThreadPoolSize>
+        <reporterMaxQueueSize>102400</reporterMaxQueueSize>
+        <additionalAvroHeaders>
+            myHeader=myValue
+        </additionalAvroHeaders>
+        <application>smapleapp</application>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%p %d{yyyy-MM-dd HH:mm:ss} %m%n</pattern>
+        </layout>
+    </appender>
+
+    <!-- 日志所在的类 -->
+    <logger name="com.baizhi.wa.interceptor" level="info" additivity="false">
+        <!-- 日志打印到控制台 -->
+        <appender-ref ref="STDOUT" />
+        <!-- 日志输出到Flume-->
+        <appender-ref ref="flume" />
+    </logger>
+</configuration>
