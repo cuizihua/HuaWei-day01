@@ -1,0 +1,23 @@
+远程debug：
+
+
+bin/run-example \
+--driver-java-options -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005 \
+--conf spark.executor.extraJavaOptions=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5006 \
+JavaWordCount \
+/opt/module/data/word.txt 
+
+
+bin/run-example \
+--num-executors 1 \
+--executor-cores 1 \
+--conf spark.executor.extraJavaOptions=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5006 \
+JavaWordCount \
+/testdata/word.txt 
+
+
+
+
+上面driver指定远程debug，官方提供了指定的参数driver-java-options可以用，也可以用--conf的方式指定：
+--conf spark.driver.extraJavaOptions=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005
+

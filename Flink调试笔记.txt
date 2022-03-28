@@ -1,0 +1,13 @@
+flink 远程调试
+
+虚拟机上解压flink-1.12
+
+flink-conf.yaml添加配置： env.java.opts: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=9098"
+或者提交参数 -Denv.java.opts=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=9098
+
+
+idea中 Run -》 Edit Configurations -> 点击左上角加号，选择remote -》  配置的端口和上面保持一致
+
+虚拟机上提交任务： flink run -m yarn-cluster ${FLINK_HOME}/examples/streaming/SocketWindowWordCount.jar --port 9999
+
+idea点击run -》 debug -》 选择刚才配置的remote ， 开始调试
